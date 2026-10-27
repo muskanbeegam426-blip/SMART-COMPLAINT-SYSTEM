@@ -32,7 +32,7 @@ def register():
         name = request.form.get('name')
         email = request.form.get('email')
         password = request.form.get('password')
-        role = request.form.get('role')
+        role = request.form.get('role') or 'citizen'
         try:
             conn = sqlite3.connect(DB_PATH)
             c = conn.cursor()
