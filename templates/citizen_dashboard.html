@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Citizen Dashboard</title>
+<style>
+body{font-family:Arial;background:#f0f2f5;padding:20px;}
+.card{background:white;padding:20px;border-radius:10px;margin-bottom:20px;}
+input, select, textarea{width:100%;padding:10px;margin:8px 0;border:1px solid #ccc;border-radius:5px;}
+button{background:#007bff;color:white;padding:10px 20px;border:none;border-radius:5px;cursor:pointer;}
+table{width:100%;border-collapse:collapse;margin-top:20px;}
+th,td{border:1px solid #ddd;padding:8px;text-align:left;}
+th{background:#007bff;color:white;}
+</style>
+</head>
+<body>
+<h2>Welcome {{ name }} - Citizen Dashboard</h2>
+<a href="/logout">Logout</a>
+
+<div class="card">
+<h3>File New Complaint</h3>
+<form method="POST">
+<label>Complaint Type *</label>
+<select name="type" required>
+<option value="Water">Water</option>
+<option value="Garbage">Garbage</option>
+<option value="Electric">Electric</option>
+<option value="Drainage">Drainage</option>
+<option value="Road">Road</option>
+</select>
+
+<label>Area / Location *</label>
+<input type="text" name="area" placeholder="Ex: T Dasarahalli" required>
+
+<label>Landmark</label>
+<input type="text" name="landmark" placeholder="Ex: Near Bus Stop">
+
+<label>Description *</label>
+<textarea name="description" rows="3" required placeholder="Ex: Pipe burst, dangerous leakage"></textarea>
+<br>
+<button type="submit">Submit Complaint</button>
+</form>
+</div>
+
+<div class="card">
+<h3>My Complaints</h3>
+<table>
+<tr><th>ID</th><th>Type</th><th>Description</th><th>Area</th><th>Landmark</th><th>Urgency</th><th>Status</th></tr>
+{% for c in complaints %}
+<tr>
+<td>{{ c[0] }}</td>
+<td>{{ c[2] }}</td>
+<td>{{ c[3] }}</td>
+<td>{{ c[4] }}</td>
+<td>{{ c[5] }}</td>
+<td><b>{{ c[6] }}</b></td>
+<td>{{ c[7] }}</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+</body>
+</html>

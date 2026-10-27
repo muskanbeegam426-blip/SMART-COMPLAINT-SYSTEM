@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Dashboard</title>
+<style>
+body{font-family:Arial;background:#f0f2f5;padding:20px;}
+.boxes{display:flex;gap:15px;margin:20px 0;}
+.box{background:white;padding:20px;border-radius:10px;flex:1;text-align:center;box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+.box h2{margin:0;color:#007bff;}
+table{width:100%;border-collapse:collapse;background:white;}
+th,td{border:1px solid #ddd;padding:10px;font-size:14px;}
+th{background:#007bff;color:white;}
+a.btn{padding:5px 10px;color:white;text-decoration:none;border-radius:3px;margin:2px;display:inline-block;}
+/* URGENCY COLORS */
+.high{background:#ff4d4d;color:white;padding:4px 10px;border-radius:12px;font-weight:bold;}
+.medium{background:#ffcc00;color:black;padding:4px 10px;border-radius:12px;font-weight:bold;}
+.low{background:#4CAF50;color:white;padding:4px 10px;border-radius:12px;font-weight:bold;}
+/* STATUS COLORS */
+.pending{background:#ffeb3b;color:black;padding:3px 8px;border-radius:10px;}
+.inprogress{background:#2196F3;color:white;padding:3px 8px;border-radius:10px;}
+.resolved{background:#4CAF50;color:white;padding:3px 8px;border-radius:10px;}
+.overdue{background:#f44336;color:white;padding:3px 8px;border-radius:10px;}
+</style>
+</head>
+<body>
+<h2>Admin Dashboard</h2>
+<a href="/analytics">View Analytics</a> | <a href="/logout">Logout</a>
+
+<div class="boxes">
+<div class="box"><h2>{{ total }}</h2><p>Total</p></div>
+<div class="box"><h2>{{ pending }}</h2><p>Pending</p></div>
+<div class="box"><h2>{{ inprogress }}</h2><p>In Progress</p></div>
+<div class="box"><h2>{{ resolved }}</h2><p>Resolved</p></div>
+<div class="box"><h2>{{ overdue }}</h2><p>Overdue</p></div>
+</div>
+
+<table>
+<tr>
+<th>ID</th><th>Citizen</th><th>Type</th><th>Desc</th><th>Location</th><th>Urgency</th><th>Status</th><th>Action</th>
+</tr>
+{% for c in complaints %}
+<tr>
+<td>{{ c[0] }}</td>
+<td>{{ c[9] }}</td>
+<td>{{ c[2] }}</td>
+<td>{{ c[3] }}</td>
+<td><b>{{ c[4] }}</b><br><small>{{ c[5] }}</small></td>
+<td>
+{% if c[6] == 'HIGH' %}<span class="high">HIGH</span>
+{% elif c[6] == 'MEDIUM' %}<span class="medium">MEDIUM</span>
+{% else %}<span class="low">LOW</span>
+{% endif %}
+</td>
+<td>
+{% if c[7] == 'Pending' %}<span class="pending">Pending</span>
+{% elif c[7] == 'In Progress' %}<span class="inprogress">In Progress</span>
+{% elif c[7] == 'Resolved' %}<span class="resolved">Resolved</span>
+{% else %}<span class="overdue">Overdue</span>
+{% endif %}
+</td>
+<td>
+<a class="btn" href="/update_status/{{ c[0] }}/InProgress" style="background:#2196F3;">In Progress</a>
+<a class="btn" href="/update_status/{{ c[0] }}/Resolved" style="background:#4CAF50;">Resolved</a>
+</td>
+</tr>
+{% endfor %}
+</table>
+</body>
+</html>
