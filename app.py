@@ -5,7 +5,10 @@ from flask import Flask, render_template, request, redirect, session
 app = Flask(__name__)
 app.secret_key = 'smart_complaint_secret'
 
-DB_PATH = '/tmp/complaint.db'
+if os.path.exists('/tmp'):
+    DB_PATH = '/tmp/complaint.db'
+else:
+    DB_PATH = 'complaint.db'
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)
